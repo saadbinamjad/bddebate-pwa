@@ -1,0 +1,58 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Random Motions</title>
+</head>
+
+<body>
+  <form [formGroup]="form" novalidate>
+    <div class="container">
+      <div class="">
+
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group" role="group">
+            <button (click)="searchState=false" type="button" class="btn btn-default" [class.active]="searchState===false">Randomize</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button (click)="searchState=true" type="button" class="btn btn-default" [class.active]="searchState===true">Search</button>
+          </div>
+        </div>
+
+        <h3 class="display-3" style="text-align: center">Random Motions</h3>
+        <p class="lead" style="text-align: center"><small><a href="http://bddebate.blogspot.com/p/debate-motions.html">From {{ index }} bddebate motions</a></small></p>
+
+        <ng-container *ngIf="searchState===false">
+          <h2 class="display-3" (click)="getRandomMotion()" class=" btn btn-lg btn-primary btn-block">Randomize</h2>
+          <p class="lead" *ngIf="randomMotion"></p>
+          <p class="lead" *ngIf="randomMotion"> {{ randomMotion }}</p>
+        </ng-container>
+
+        <ng-container *ngIf="searchState===true">
+          <div class="display-3">
+            <div class="input-group">
+              <input formControlName="query" type="text" class="form-control" placeholder="Keyword">
+              <span class="input-group-btn">
+                  <button (click)="search()"  class="btn btn-default" [disabled]="!form.controls['query'].value"type="button">Search</button>
+                </span>
+            </div>
+            <ng-container class="input-group" *ngIf="searchResults">
+              <p class="lead"></p>
+              <p *ngIf="errorMessage" class="lead"><small style="color: red">{{errorMessage}}</small></p>
+              <ul>
+                <li *ngFor="let motion of searchResults">
+                  <span>{{ motion}}</span>
+                  <span></span>
+                </li>
+              </ul>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </form>
+
+</body>
+
+</html>
